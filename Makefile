@@ -1,13 +1,13 @@
-.PHONY: clean format up restart exec logs down
+.PHONY: format up restart exec logs down
 
 COMPOSE_FILE := compose.yaml
 COMPOSE_CMD := docker compose -f $(COMPOSE_FILE)
 
-clean:
-	@rm -rf ./data && mkdir -p ./data
-
-format: clean
+format:
 	@yq -i 'sort_keys(..)' $(COMPOSE_FILE)
+	@yq -i '.services.cdh5.extra_hosts |= sort' $(COMPOSE_FILE)
+	@yq -i '.services.cdh5.ports |= sort' $(COMPOSE_FILE)
+	@yq -i '.services.cdh5.tmpfs |= sort' $(COMPOSE_FILE)
 
 up: format
 	@$(COMPOSE_CMD) up -d --build
