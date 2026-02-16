@@ -1,19 +1,25 @@
 name: cloudera
 services:
   cdh5:
-    image: ghcr.io/stevenqcly/cloudera-cdh5:cdh5-v2
+    container_name: cdh5-v3
+    extra_hosts:
+      - localhost.localdomain:127.0.0.1
+    image: ghcr.io/stevenqcly/cloudera-cdh5:cdh5-v3
+    platform: linux/amd64
     ports:
       - 10000:10000
       - 10002:10002
       - 11000:11000
       - 18080:18080
+      - 19888:19888
       - 2181:2181
       - 50070:50070
       - 60010:60010
       - 60030:60030
+      - 8042:8042
       - 8088:8088
       - 8888:8888
     privileged: true
-    volumes:
-      - ./data/run:/run
-      - ./data/tmp:/tmp
+    tmpfs:
+      - /run
+      - /tmp
