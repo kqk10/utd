@@ -15,6 +15,9 @@ up: format
 restart: format
 	@$(COMPOSE_CMD) restart cdh5
 
+setup: format
+	@./scripts/setup.sh
+
 exec: format
 	@$(COMPOSE_CMD) exec cdh5 bash
 
